@@ -1,0 +1,49 @@
+import pygame, sys
+from player import Player
+from alien import Alien
+from tv import Tv
+
+#스크린의 크기를 정하는 코드
+screen_width, screen_hight = 500, 600
+
+pygame.init()
+
+screen = pygame.display.set_mode((screen_width, screen_hight))
+clock = pygame.time.Clock()
+fps = 60
+
+player_sprite = Player(screen_hight, screen_width)
+player = pygame.sprite.GroupSingle(player_sprite)
+
+aliens = pygame.sprite.Group()
+alien_start_pos = [[150, 200], [200, 200], [250, 200], [300, 200], [350, 200]]
+
+for position in alien_start_pos:
+    alien_sprite_1 = Alien(screen_hight, screen_width, position[0], position[1])
+    aliens.add(alien_sprite_1)
+
+tv_sprite = Tv(screen_width, screen_hight)
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+    screen.fill((30, 30, 30))
+
+    player.update()
+    player.sprite.lasers.draw(screen)    
+    player.draw(screen)
+    aliens.update()
+    aliens.draw(screen)
+    tv_sprite.draw(screen)
+
+    all_alien = aliens.sprites()
+
+    for laser in player.sprite.lasers:
+        for alien in all_alien:
+            if pygame.sprite.spritecollide(laser, alien, True):
+                laser.kill()
+
+    pygame.display.flip()
+    clock.tick(fps)
