@@ -6,7 +6,7 @@ class Alien(pygame.sprite.Sprite):
     self.image = pygame.image.load('./graphics/yellow.png').convert_alpha()
     self.rect = self.image.get_rect(midbottom = (x, y))
     self.speed = 2
-    self.down_speed = 10
+    self.down_speed = self.rect.height + 5
     self.screen_hight = screen_hight
     self.screen_width = screen_width
     self.direction = 'right'
