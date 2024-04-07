@@ -38,12 +38,9 @@ while True:
     aliens.draw(screen)
     tv_sprite.draw(screen)
 
-    all_alien = aliens.sprites()
-
     for laser in player.sprite.lasers:
-        for alien in all_alien:
-            if pygame.sprite.spritecollide(laser, alien, True):
-                laser.kill()
+        if pygame.sprite.spritecollide(laser, aliens, True):
+            laser.kill()
 
     pygame.display.flip()
     clock.tick(fps)
