@@ -5,6 +5,8 @@ from tv import Tv
 
 #스크린의 크기를 정하는 코드
 screen_width, screen_hight = 500, 600
+alien_num_in_row = 8
+screen_magin = 50
 
 pygame.init()
 
@@ -16,7 +18,10 @@ player_sprite = Player(screen_hight, screen_width)
 player = pygame.sprite.GroupSingle(player_sprite)
 
 aliens = pygame.sprite.Group()
-alien_start_pos = [[150, 200], [200, 200], [250, 200], [300, 200], [350, 200]]
+alien_start_pos = []
+
+for count in range(alien_num_in_row):
+    alien_start_pos.append([screen_magin + (count * ((screen_width - (screen_magin * 2)) / alien_num_in_row)), 200])
 
 for position in alien_start_pos:
     alien_sprite_1 = Alien(screen_hight, screen_width, position[0], position[1])
