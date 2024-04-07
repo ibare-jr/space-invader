@@ -7,6 +7,7 @@ from tv import Tv
 screen_width, screen_hight = 500, 600
 alien_num_in_row = 8
 screen_magin = 50
+row_distance = 50
 
 pygame.init()
 
@@ -20,8 +21,9 @@ player = pygame.sprite.GroupSingle(player_sprite)
 aliens = pygame.sprite.Group()
 alien_start_pos = []
 
-for count in range(alien_num_in_row):
-    alien_start_pos.append([screen_magin + (count * ((screen_width - (screen_magin * 2)) / alien_num_in_row)), 200])
+for line in range(5):
+    for count in range(alien_num_in_row):
+        alien_start_pos.append([screen_magin + (count * ((screen_width - (screen_magin * 2)) / alien_num_in_row)), 100 + (row_distance * line)])
 
 for position in alien_start_pos:
     alien_sprite_1 = Alien(screen_hight, screen_width, position[0], position[1])
