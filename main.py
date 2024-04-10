@@ -1,6 +1,7 @@
 import pygame, sys
 from player import Player
 from alien import Alien
+from extra import Extra
 from tv import Tv
 
 #스크린의 크기를 정하는 코드
@@ -17,6 +18,9 @@ fps = 60
 
 player_sprite = Player(screen_hight, screen_width)
 player = pygame.sprite.GroupSingle(player_sprite)
+
+extra_sprite = Extra(screen_hight, screen_width)
+extra = pygame.sprite.Group(extra_sprite)
 
 aliens = pygame.sprite.Group()
 alien_start_pos = []
@@ -43,6 +47,9 @@ while True:
     player.draw(screen)
     aliens.update()
     aliens.draw(screen)
+    extra.update()
+    extra.draw(screen)
+    
     tv_sprite.draw(screen)
 
     for laser in player.sprite.lasers:
