@@ -6,7 +6,6 @@ class Player(pygame.sprite.Sprite):
     super().__init__()
     self.image = pygame.image.load('./graphics/player.png').convert_alpha()
     self.rect = self.image.get_rect(midbottom = (250, 500))
-    self.rect = self.image.get_rect(midbottom = (300, 500))
     self.speed = 10
     self.laser_sound = pygame.mixer.Sound('./audio/laser.wav')
     self.laser_sound.set_volume(0.1)

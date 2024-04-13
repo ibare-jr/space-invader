@@ -56,5 +56,9 @@ while True:
         if pygame.sprite.spritecollide(laser, aliens, True):
             laser.kill()
 
+    for laser in player.sprite.lasers:
+        if pygame.sprite.spritecollide(laser, extra, True):
+            laser.kill()
+
     pygame.display.flip()
     clock.tick(fps)
