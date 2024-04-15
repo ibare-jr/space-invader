@@ -9,8 +9,14 @@ screen_width, screen_hight = 500, 600
 alien_num_in_row = 8
 screen_magin = 50
 row_distance = 50
+score = 0
+complete_signal =0
+game_complete_surface_rect = 0
+game_complete_surface = 0
 
 pygame.init()
+
+font = pygame.font.Font('./font/Pixeled.ttf', 20)
 
 screen = pygame.display.set_mode((screen_width, screen_hight))
 clock = pygame.time.Clock()
@@ -19,8 +25,8 @@ fps = 60
 player_sprite = Player(screen_hight, screen_width)
 player = pygame.sprite.GroupSingle(player_sprite)
 
-extra_sprite = Extra(screen_hight, screen_width)
-extra = pygame.sprite.Group(extra_sprite)
+# extra_sprite = Extra(screen_hight, screen_width)
+# extra = pygame.sprite.Group(extra_sprite)
 
 aliens = pygame.sprite.Group()
 alien_start_pos = []
@@ -47,18 +53,35 @@ while True:
     player.draw(screen)
     aliens.update()
     aliens.draw(screen)
-    extra.update()
-    extra.draw(screen)
-    
+    # extra.update()
+    # extra.draw(screen)
+    space_invader_surface = font.render('space invader', True, 'white')
+    space_invader_rect = space_invader_surface.get_rect(topleft = (0,-10))
+    screen.blit(space_invader_surface, space_invader_rect)
+
+    score_surface = font.render(str(score), True, 'white')
+    score_rect = score_surface.get_rect(bottomright = (screen_width - 10, screen_hight - 10))
+    screen.blit(score_surface, score_rect)
+
     tv_sprite.draw(screen)
 
-    for laser in player.sprite.lasers:
-        if pygame.sprite.spritecollide(laser, aliens, True):
-            laser.kill()
+    alien_hit = []
 
     for laser in player.sprite.lasers:
-        if pygame.sprite.spritecollide(laser, extra, True):
+        alien_hit = pygame.sprite.spritecollide(laser, aliens, True)
+        if alien_hit:
             laser.kill()
+            complete_signal += 1
+            print(complete_signal)
 
+    for alien_score in alien_hit:
+        score +=1
+
+    if complete_signal == 40:
+        screen.fill((30,30,30))
+        game_complete_surface = font.render('game complete', True, 'white')
+        game_complete_surface_rect = game_complete_surface.get_rect(midbottom = (screen_width - 250 , screen_hight - 300))
+        screen.blit(game_complete_surface, game_complete_surface_rect)
+    
     pygame.display.flip()
     clock.tick(fps)
