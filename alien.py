@@ -10,7 +10,8 @@ class Alien(pygame.sprite.Sprite):
     self.screen_hight = screen_hight
     self.screen_width = screen_width
     self.direction = 'right'
-  
+    self.lives = 2
+
   def update(self):
     self.movement()
     self.crossing_lines()
@@ -31,4 +32,12 @@ class Alien(pygame.sprite.Sprite):
     else:
       self.rect.x -= self.speed
 
-      
+  def reduce_lives(self):
+    self.lives -= 1
+    if self.lives == 1: 
+      self.image = pygame.image.load('./graphics/red.png').convert_alpha()
+    if self.lives == 0:
+      self.kill()
+      return True
+    else:
+      return False

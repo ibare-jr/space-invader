@@ -10,9 +10,9 @@ alien_num_in_row = 8
 screen_magin = 50
 row_distance = 50
 score = 0
-complete_signal =0
 game_complete_surface_rect = 0
 game_complete_surface = 0
+die_signal = 0
 
 pygame.init()
 
@@ -68,20 +68,29 @@ while True:
     alien_hit = []
 
     for laser in player.sprite.lasers:
-        alien_hit = pygame.sprite.spritecollide(laser, aliens, True)
-        if alien_hit:
+        alien_hit = pygame.sprite.spritecollide(laser, aliens, False)
+        if len(alien_hit) >= 1:
             laser.kill()
-            complete_signal += 1
-            print(complete_signal)
+            for alien in alien_hit:
+                if alien.reduce_lives() == True:
+                    score += len(alien_hit)
+                
 
-    for alien_score in alien_hit:
-        score +=1
+    # player_hit = pygame.sprite.spritecollide(aliens, player, False)
+    # if player_hit:
+    #     die_signal += 1
 
-    if complete_signal == 40:
+    if len(aliens.sprites()) == 0:
         screen.fill((30,30,30))
         game_complete_surface = font.render('game complete', True, 'white')
         game_complete_surface_rect = game_complete_surface.get_rect(midbottom = (screen_width - 250 , screen_hight - 300))
         screen.blit(game_complete_surface, game_complete_surface_rect)
-    
+
+    # if die_signal >= 1:
+    #     screen.fill((160, 0, 0))
+    #     game_over_surface = font.render('GameOver', True, 'black')
+    #     game_over_surface_rect = game_over_surface.get_rect(midbottom = (screen_width - 250 , screen_hight - 300))
+    #     screen.blit(game_over_surface, game_over_surface_rect)
+
     pygame.display.flip()
     clock.tick(fps)
