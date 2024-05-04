@@ -15,11 +15,13 @@ class Player(pygame.sprite.Sprite):
     self.laser_time = 0
     self.laser_cooltime = 100
     self.laser_fire = False
+    self.lives = 3
 
   def update(self):
     self.handle_keyboard()
     self.crossing_lines()
     self.lasers.update()
+   
 
   def handle_keyboard(self):
     keys = pygame.key.get_pressed()
@@ -43,4 +45,11 @@ class Player(pygame.sprite.Sprite):
       self.rect.x -= self.speed
     elif self.rect.x <= 0:
       self.rect.x += self.speed
-    
+
+  def reduce_lives(self):
+    self.lives -= 1
+    if self.lives == 0:
+      self.kill()
+      return True
+    else:
+      return False
