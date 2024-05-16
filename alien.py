@@ -1,4 +1,5 @@
 import pygame
+from laser import Laser
 
 class Alien(pygame.sprite.Sprite):
   def __init__(self, screen_hight, screen_width, x, y):
@@ -11,6 +12,7 @@ class Alien(pygame.sprite.Sprite):
     self.screen_width = screen_width
     self.direction = 'right'
     self.lives = 2
+    self.lasers = pygame.sprite.Group()
 
   def update(self):
     self.movement()
@@ -41,3 +43,6 @@ class Alien(pygame.sprite.Sprite):
       return True
     else:
       return False
+    
+  def fire_laser(self):
+    self.lasers.add(Laser(self.rect.center, self.screen_hight, 'down'))

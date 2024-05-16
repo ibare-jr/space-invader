@@ -13,7 +13,7 @@ class Player(pygame.sprite.Sprite):
     self.screen_hight = screen_hight
     self.screen_width = screen_width
     self.laser_time = 0
-    self.laser_cooltime = 100
+    self.laser_cooltime = 1000
     self.laser_fire = False
     self.lives = 3
 
@@ -32,7 +32,7 @@ class Player(pygame.sprite.Sprite):
     elif keys[pygame.K_SPACE]:
       if self.laser_fire == False:
         self.laser_sound.play()
-        self.lasers.add(Laser(self.rect.center, self.screen_hight))
+        self.lasers.add(Laser(self.rect.center, self.screen_hight, 'up'))
         self.laser_fire = True
         self.laser_time = pygame.time.get_ticks()
     if self.laser_fire == True:

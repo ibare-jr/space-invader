@@ -3,6 +3,7 @@ from player import Player
 from alien import Alien
 from extra import Extra
 from tv import Tv
+from random import randint, choice
 
 #스크린의 크기를 정하는 코드
 screen_width, screen_hight = 500, 600
@@ -17,8 +18,11 @@ player_kill = 0
 is_game_finished = False
 bad_ending = False
 happy_ending = False
+count_game_loop = 0
 
 pygame.init()
+
+play_time = pygame.time.get_ticks()
 
 font = pygame.font.Font('./font/Pixeled.ttf', 20)
 
@@ -65,6 +69,11 @@ while True:
         screen.blit(score_surface, score_rect)
 
         tv_sprite.draw(screen)
+
+        if pygame.time.get_ticks() - play_time >= 3000:
+            fire_alien = choice(aliens.sprites())
+            fire_alien.fire_laser()
+            play_time = pygame.time.get_ticks()
 
         alien_hit = []
 
